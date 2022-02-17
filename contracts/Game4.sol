@@ -1,18 +1,21 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.7.0;
+import "hardhat/console.sol";
 
 contract Game4 {
-  bool public isWon;
+    bool public isWon;
 
-  mapping(address => mapping(address => bool)) nested;
+    mapping(address => mapping(address => bool)) nested;
 
-  function write(address x) external {
-    nested[x][msg.sender] = true;
-  }
+    // x -> msg.sender -> true
+    function write(address x) external {
+        nested[x][msg.sender] = true;
+    }
 
-  function win(address y) external {
-    require(nested[msg.sender][y], "Nope. Try again!");
-
-    isWon = true;
-  }
+    // msg.sender -> y -> true
+    // address x and y are the same
+    function win(address y) external {
+        require(nested[msg.sender][y], "Nope. Try again!");
+        isWon = true;
+    }
 }
